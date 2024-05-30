@@ -76,7 +76,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: tfplan
-          path: tfplan
+          path: ./infra/tfplan
 
       # Create string output of Terraform Plan
       - name: Create String Output
@@ -147,6 +147,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: tfplan
+          path: ./infra
 
       # Terraform Apply
       - name: Terraform Apply
