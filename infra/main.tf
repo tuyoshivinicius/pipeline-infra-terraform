@@ -15,6 +15,6 @@ provider "aws" {
 # resources
 
 resource "aws_sns_topic" "example" {
-  name              = "example-topic"
+  name = "example-topic"
   kms_master_key_id = "alias/kms-example-topic"
 }
