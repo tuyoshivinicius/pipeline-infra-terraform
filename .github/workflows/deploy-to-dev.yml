@@ -24,6 +24,9 @@ jobs:
   terraform-plan:
     name: Terraform Plan
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./infra
     environment: dev
     env:
       #this is needed since we are running terraform with read-only permissions
@@ -50,8 +53,8 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-      - name: Terraform Init
-        run: terraform init -reconfigure -backend-config=_setup/backend-dev.conf
+      - name: Terraform Init        
+        run: terraform init -reconfigure -backend-config=../.setup/backend-dev.conf
 
       # Checks that all Terraform configuration files adhere to a canonical format
       # Will fail the build if not
@@ -61,10 +64,10 @@ jobs:
       # Generates an execution plan for Terraform
       # An exit code of 0 indicated no changes, 1 a terraform failure, 2 there are pending changes.
       - name: Terraform Plan
-        id: tf-plan
+        id: tf-plan        
         run: |
           export exitcode=0
-          terraform plan -var-file=infra/vars/dev.tfvars -detailed-exitcode -no-color -out tfplan || export exitcode=$?
+          terraform plan -var-file=vars/dev.tfvars -detailed-exitcode -no-color -out tfplan || export exitcode=$?
 
           echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
 
@@ -141,7 +144,7 @@ jobs:
 
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
-        run: terraform init -reconfigure -backend-config=_setup/backend-dev.conf
+        run: terraform init -reconfigure -backend-config=../.setup/backend-dev.conf
 
       # Download saved plan from artifacts
       - name: Download Terraform Plan
