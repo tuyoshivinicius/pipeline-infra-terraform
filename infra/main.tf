@@ -14,6 +14,7 @@ provider "aws" {
 
 # resources
 
-resource "aws_sns_topic" "user_updates" {
-  name = "user-updates-topic"
+resource "aws_sns_topic" "example" {
+  name              = "example-topic"
+  kms_master_key_id = "alias/kms-example-topic"
 }
