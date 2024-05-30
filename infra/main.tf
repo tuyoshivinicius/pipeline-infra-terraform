@@ -14,11 +14,6 @@ provider "aws" {
 
 # resources
 
-resource "aws_s3_bucket" "example" {
-  bucket = "my-tf-test-bucket"
-
-  tags = {
-    Name        = "My bucket"
-    Environment = "Dev"
-  }
+resource "aws_sns_topic" "user_updates" {
+  name = "user-updates-topic"
 }
