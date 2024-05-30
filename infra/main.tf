@@ -9,7 +9,7 @@ terraform {
 }
 
 provider "aws" {
-  region = local.region
+  region = data.aws_region.current.name
 }
 
 # resources
