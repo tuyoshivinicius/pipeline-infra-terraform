@@ -17,6 +17,9 @@ jobs:
   terraform-plan:
     name: Terraform Plan
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./infra
     environment: prod
     env:
       #this is needed since we are running terraform with read-only permissions
@@ -44,7 +47,7 @@ jobs:
 
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
-        run: terraform init -reconfigure -backend-config=.setup/backend-prod.conf
+        run: terraform init -reconfigure -backend-config=../.setup/backend-prod.conf
 
       # Checks that all Terraform configuration files adhere to a canonical format
       # Will fail the build if not
@@ -57,7 +60,7 @@ jobs:
         id: tf-plan
         run: |
           export exitcode=0
-          terraform plan -var-file=infra/vars/prod.tfvars -detailed-exitcode -no-color -out tfplan || export exitcode=$?
+          terraform plan -var-file=vars/prod.tfvars -detailed-exitcode -no-color -out tfplan || export exitcode=$?
 
           echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
 
@@ -134,7 +137,7 @@ jobs:
 
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
-        run: terraform init -reconfigure -backend-config=.setup/backend-prod.conf
+        run: terraform init -reconfigure -backend-config=../.setup/backend-prod.conf
 
       # Download saved plan from artifacts
       - name: Download Terraform Plan
