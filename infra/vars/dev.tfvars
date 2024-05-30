@@ -1,2 +1,2 @@
-env        = "dev"
-aws_region = "us-west-1"
+env    = "dev"
+region = "us-west-1"
