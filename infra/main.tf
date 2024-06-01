@@ -25,7 +25,7 @@ data "aws_caller_identity" "current" {}
 
 # Criando S3 Bucket
 resource "aws_s3_bucket" "meu_bucket" {
-  bucket = "nome_do_meu_bucket"
+  bucket = "nome-do-meu-bucket"
 }
 
 # Criando Policy do bucket e attachando ao documento de policy
